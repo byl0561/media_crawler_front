@@ -1,47 +1,157 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import MediaContainer from "@/components/MediaContainer.vue";
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <Header/>
+  <MediaContainer/>
+  <Footer/>
 </template>
 
-<style scoped>
-header {
+<style>
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  border: 0;
+  font-family: inherit;
+  font-size: 100%;
+  font-style: inherit;
+  font-weight: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font-family: 'OpenSans', sans-serif;
   line-height: 1.5;
 }
-
-.logo {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section {
   display: block;
-  margin: 0 auto 2rem;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+body {
+  overflow-x: hidden;
+}
+body {
+  font-size: 150px;
+  font-size: 15rem;
+  font-size: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
   }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+img {
+  -ms-interpolation-mode: bicubic;
+  border: 0;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+p {
+  margin-bottom: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #abb7c4;
+  font-weight: 300;
+  text-transform: none;
+  line-height: 24px !important;
+}
+
+ul {
+  list-style: none;
+  margin-left: 0;
 }
 </style>
