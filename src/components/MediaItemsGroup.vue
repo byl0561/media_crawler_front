@@ -1,0 +1,223 @@
+<script setup lang="ts">
+defineProps(["mediaGroup"])
+</script>
+
+<template>
+  <div class="title-hd">
+    <h2>{{mediaGroup.name}}</h2>
+  </div>
+  <div class="tabs">
+    <ul class="tab-links">
+      <li class="active"><a href="#tab1">{{mediaGroup.mediaItemGroups[0].name}}</a></li>
+      <li><a href="#tab2">{{mediaGroup.mediaItemGroups[1].name}}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="tab1" class="tab">
+        <div class="row">
+          <div class="slick-multiItem">
+            <div class="slide-it" v-for="(mediaItem, index) in mediaGroup.mediaItemGroups[0].mediaItems" :key="index">
+              <div class="movie-item">
+                <div class="mv-img">
+                  <img :src="mediaItem.img" alt="" width="185" height="284">
+                </div>
+                <div class="title-in">
+                  <h6><a href="#">{{mediaItem.title}}</a></h6>
+                  <p><i class="ion-android-star"></i><span>{{mediaItem.score}}</span> /10</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.title-hd {
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+.title-hd h2 {
+  font-family: 'Dosis', sans-serif;
+  font-size: 24px;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+@media (max-width: 767px) {
+  .title-hd h2 {
+    margin: 0;
+  }
+}
+
+.tabs {
+  margin-bottom: 60px;
+  overflow: hidden;
+}
+.tabs ul.tab-links {
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0;
+}
+@media (max-width: 767px) {
+  .tabs ul.tab-links {
+    display: inherit;
+  }
+  .tabs ul.tab-links li {
+    margin-bottom: 15px;
+  }
+}
+.tabs ul.tab-links li {
+  margin-right: 20px;
+}
+.tabs ul.tab-links li a {
+  font-family: 'Dosis', sans-serif;
+  font-size: 14px;
+  color: #abb7c4;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.tabs ul.tab-links li a:hover {
+  color: #dcf836;
+}
+.tabs ul.tab-links li.active a {
+  color: #dcf836;
+}
+
+.tab-links {
+  position: relative;
+}
+
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.slick-multiItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-it {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.movie-item {
+  position: relative;
+  margin-right: 30px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+@media (max-width: 767px) {
+  .movie-item {
+    display: inherit;
+    margin-right: 0px;
+  }
+}
+.movie-item .mv-img {
+  position: relative;
+}
+.movie-item .mv-img:after {
+  box-shadow: inset -5px -50px 100px -15px #000000;
+  -webkit-box-shadow: inset -5px -50px 100px -15px #000000;
+  -moz-box-shadow: inset -5px -50px 100px -15px #000000;
+  -o-box-shadow: inset -5px -50px 100px -15px #000000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+}
+.movie-item img {
+  width: 100%;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.movie-item .title-in {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+@media (max-width: 767px) {
+  .movie-item .title-in {
+    margin-left: 60px;
+  }
+}
+.movie-item .title-in h6 a {
+  font-family: 'Dosis', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.movie-item .title-in p {
+  font-size: 12px;
+  color: #ffffff;
+}
+.movie-item .title-in p i {
+  color: #f5b50a;
+  font-size: 22px;
+}
+.movie-item .title-in p span {
+  font-weight: 400;
+  font-size: 18px;
+}
+.movie-item:hover img {
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+  -moz-opacity: 0.25;
+  -khtml-opacity: 0.25;
+  -webkit-opacity: 0.25;
+  opacity: 0.25;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);
+  filter: alpha(opacity=25);
+}
+.movie-items .movie-item:hover h6 a {
+  color: #dcf836;
+}
+
+@font-face {
+  font-family: "Ionicons";
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/fonts/ionicons.eot");
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/fonts/ionicons.eot") format("embedded-opentype"), url("https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/fonts/ionicons.ttf") format("truetype"), url("https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/fonts/ionicons.woff") format("woff"), url("https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/fonts/ionicons.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+.ion-android-star:before {
+  content: "\f2fc";
+  display: inline-block;
+  font-family: "Ionicons";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>
