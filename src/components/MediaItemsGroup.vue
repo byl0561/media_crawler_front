@@ -1,5 +1,15 @@
 <script setup lang="ts">
-defineProps(["mediaGroup"])
+import type {MediaGroup, MediaItemGroup} from "@/types";
+import {ref, toRef} from "vue";
+
+const {mediaGroup} = defineProps<{mediaGroup:MediaGroup}>()
+let activeIndex = ref<Number>(0)
+let activeGroup = ref<MediaItemGroup>(mediaGroup.mediaItemGroups[0])
+
+function onActive(index: number) {
+  activeIndex.value = index
+  activeGroup.value = mediaGroup.mediaItemGroups[index]
+}
 </script>
 
 <template>
@@ -8,14 +18,14 @@ defineProps(["mediaGroup"])
   </div>
   <div class="tabs">
     <ul class="tab-links">
-      <li class="active"><a href="#tab1">{{mediaGroup.mediaItemGroups[0].name}}</a></li>
-      <li><a href="#tab2">{{mediaGroup.mediaItemGroups[1].name}}</a></li>
+      <li v-for="(itemGroup, index) in mediaGroup.mediaItemGroups" :key="index"
+          :class="{active: activeIndex === index}"><a href="#" @click="onActive(index)">{{itemGroup.name}}</a></li>
     </ul>
     <div class="tab-content">
       <div id="tab1" class="tab">
         <div class="row">
           <div class="slick-multiItem">
-            <div class="slide-it" v-for="(mediaItem, index) in mediaGroup.mediaItemGroups[0].mediaItems" :key="index">
+            <div class="slide-it" v-for="(mediaItem, index) in activeGroup.mediaItems" :key="index">
               <div class="movie-item">
                 <div class="mv-img">
                   <img :src="mediaItem.img" alt="" width="185" height="284">
@@ -79,8 +89,6 @@ defineProps(["mediaGroup"])
 }
 .tabs ul.tab-links li {
   margin-right: 20px;
-}
-.tabs ul.tab-links li a {
   font-family: 'Dosis', sans-serif;
   font-size: 14px;
   color: #abb7c4;

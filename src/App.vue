@@ -78,6 +78,14 @@ td {
   padding: 0;
   vertical-align: baseline;
 }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Prevents iOS text size adjust after orientation change, without disabling user zoom */
+  -ms-text-size-adjust: 100%;
+  /* www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/ */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 body,
 button,
 input,
@@ -165,7 +173,22 @@ a {
   text-decoration: none;
 }
 
+.container:before,
+.container:after,
+.row:before,
+.row:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after {
+  content: " ";
+  display: table;
+}
+
 *,:after,:before {
- box-sizing: inherit;
+ box-sizing: border-box;
+}
+.row:after {
+  clear: both;
 }
 </style>

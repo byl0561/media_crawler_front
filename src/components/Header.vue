@@ -6,7 +6,7 @@
       <nav class="navbar navbar-default navbar-custom">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header logo">
-          <div><img class="logo" src="/public/images/logo.png" alt="" width="119" height="58"></div>
+          <div><img class="logo" src="/images/logo.png" alt="" width="119" height="58"></div>
         </div>
         <!-- /.navbar-collapse -->
       </nav>
@@ -64,6 +64,16 @@ header .navbar-default {
 }
 header#header-light .navbar-default {
   padding: 15px 0;
+}
+@media (min-width: 992px) {
+  header .navbar-default {
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
 @media (max-width: 767px) {
   header .navbar-default {
