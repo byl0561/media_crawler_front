@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import MediaItemsGroup from "@/components/MediaItemsGroup.vue";
-import useMovie from "@/hooks/useMovie";
+import useAnime from "@/hooks/useAnime";
 
-const {movies} = useMovie()
+const {anime} = useAnime()
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const {movies} = useMovie()
     <div class="container">
       <div class="row ipad-width">
         <div class="col-md">
-          <MediaItemsGroup :mediaGroup="movies" />
+          <MediaItemsGroup :mediaGroup="anime" />
         </div>
       </div>
     </div>

@@ -1,15 +1,25 @@
 <script setup lang="ts">
-import type {MediaGroup, MediaItemGroup} from "@/types";
-import {ref, toRef} from "vue";
+import type {MediaGroup, MediaItemGroupData} from "@/types";
+import {onMounted, ref, toRef} from "vue";
 
 const {mediaGroup} = defineProps<{mediaGroup:MediaGroup}>()
+let loading = ref<boolean>(false);
 let activeIndex = ref<Number>(0)
-let activeGroup = ref<MediaItemGroup>(mediaGroup.mediaItemGroups[0])
+let activeData = ref<MediaItemGroupData>({
+  valid: false,
+  mediaItems: [],
+})
 
-function onActive(index: number) {
+async function onActive(index: number) {
   activeIndex.value = index
-  activeGroup.value = mediaGroup.mediaItemGroups[index]
+  loading.value = true
+  activeData.value = await mediaGroup.mediaItemFunctionGroups[index].acquireData()
+  loading.value = false
 }
+
+onMounted(() => {
+  onActive(0)
+})
 </script>
 
 <template>
@@ -18,14 +28,14 @@ function onActive(index: number) {
   </div>
   <div class="tabs">
     <ul class="tab-links">
-      <li v-for="(itemGroup, index) in mediaGroup.mediaItemGroups" :key="index"
+      <li v-for="(itemGroup, index) in mediaGroup.mediaItemFunctionGroups" :key="index"
           :class="{active: activeIndex === index}"><a href="#" @click="onActive(index)">{{itemGroup.name}}</a></li>
     </ul>
     <div class="tab-content">
       <div id="tab1" class="tab">
         <div class="row">
           <div class="slick-multiItem">
-            <div class="slide-it" v-for="(mediaItem, index) in activeGroup.mediaItems" :key="index">
+            <div class="slide-it" v-for="(mediaItem, index) in activeData.mediaItems" :key="index">
               <div class="movie-item">
                 <div class="mv-img">
                   <img :src="mediaItem.img" alt="" width="185" height="284">

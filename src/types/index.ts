@@ -1,16 +1,20 @@
 export interface MediaItem {
     title: string;
-    subtitle: string;
     img: string;
     score: number;
 }
 
-export interface MediaItemGroup {
-    name: string;
+export interface MediaItemGroupData {
+    valid: boolean,
     mediaItems: MediaItem[];
+}
+
+export interface MediaItemFunctionGroup {
+    name: string;
+    acquireData: () => Promise<MediaItemGroupData>;
 }
 
 export interface MediaGroup {
     name: string;
-    mediaItemGroups: MediaItemGroup[];
+    mediaItemFunctionGroups: MediaItemFunctionGroup[];
 }
