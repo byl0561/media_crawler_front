@@ -1,21 +1,21 @@
 import type {MediaGroup, MediaItem, MediaItemGroupData} from "@/types";
-import {appendAnimeEpisode, appendAnimeSeason, diffAnime} from "@/http/api";
+import {appendTVEpisode, appendTVSeason, diffTV} from "@/http/api";
 
 export default function () {
-    function animeHttpToMedia(anime: any): MediaItem {
+    function tvHttpToMedia(tv: any): MediaItem {
         return {
-            title: anime.title,
-            img: anime.poster,
-            score: anime.score,
+            title: tv.title,
+            img: tv.poster,
+            score: tv.score,
         }
     }
 
-    async function getLostAnime(): Promise<MediaItemGroupData> {
+    async function getLostTV(): Promise<MediaItemGroupData> {
         const group: MediaItemGroupData = {
             valid: true,
             mediaItems: [],
         }
-        const httpRes = await diffAnime()
+        const httpRes = await diffTV()
         if (!httpRes.success) {
             group.valid = false
             return group
@@ -25,19 +25,19 @@ export default function () {
             return group
         }
 
-        for (const item of httpRes.data.missing_animates) {
-            group.mediaItems.push(animeHttpToMedia(item))
+        for (const item of httpRes.data.missing_tv_shows) {
+            group.mediaItems.push(tvHttpToMedia(item))
         }
 
         return group
     }
 
-    async function getContinuedAnime(): Promise<MediaItemGroupData> {
+    async function getContinuedTV(): Promise<MediaItemGroupData> {
         const group: MediaItemGroupData = {
             valid: true,
             mediaItems: [],
         }
-        const [httpSeasonRes, httpEpisodeRes] = await Promise.all([appendAnimeSeason(), appendAnimeEpisode()])
+        const [httpSeasonRes, httpEpisodeRes] = await Promise.all([appendTVSeason(), appendTVEpisode()])
         if (!httpSeasonRes.success || !httpEpisodeRes.success) {
             group.valid = false
             return group
@@ -47,11 +47,11 @@ export default function () {
             return group
         }
 
-        const animeMap = new Map<string, any>()
+        const tvMap = new Map<string, any>()
         const lostSeasonMap = new Map<string, Set<number>>()
         for (const [key, value] of Object.entries(httpSeasonRes.data)) {
             const v = value as any
-            animeMap.set(key, v.tv_show)
+            tvMap.set(key, v.tv_show)
 
             const seasons = new Set<number>()
             const items = v.missing_seasons as any[]
@@ -62,7 +62,7 @@ export default function () {
         }
         for (const [key, value] of Object.entries(httpEpisodeRes.data)) {
             const v = value as any
-            animeMap.set(key, v.tv_show)
+            tvMap.set(key, v.tv_show)
             if (!lostSeasonMap.has(key)) {
                 lostSeasonMap.set(key, new Set<number>())
             }
@@ -74,23 +74,23 @@ export default function () {
             }
         }
 
-        for (const [key, value] of animeMap) {
-            const anime = animeHttpToMedia(value)
+        for (const [key, value] of tvMap) {
+            const tv = tvHttpToMedia(value)
             const lostSeasons = Array.from(lostSeasonMap.get(key) as Set<number>)
             lostSeasons.sort((a, b) => a - b)
-            anime.title = `${anime.title} - ${lostSeasons.map(num => `S${num}`).join(',')}`
-            group.mediaItems.push(anime)
+            tv.title = `${tv.title} - ${lostSeasons.map(num => `S${num}`).join(',')}`
+            group.mediaItems.push(tv)
         }
 
         return group
     }
 
-    async function getOutdatedAnime(): Promise<MediaItemGroupData> {
+    async function getOutdatedTV(): Promise<MediaItemGroupData> {
         const group: MediaItemGroupData = {
             valid: true,
             mediaItems: [],
         }
-        const httpRes = await diffAnime()
+        const httpRes = await diffTV()
         if (!httpRes.success) {
             group.valid = false
             return group
@@ -100,30 +100,30 @@ export default function () {
             return group
         }
 
-        for (const item of httpRes.data.extra_animates) {
-            group.mediaItems.push(animeHttpToMedia(item))
+        for (const item of httpRes.data.extra_tv_shows) {
+            group.mediaItems.push(tvHttpToMedia(item))
         }
 
         return group
     }
 
-    const anime: MediaGroup = {
-        name: "动漫",
+    const tv: MediaGroup = {
+        name: "电视剧",
         mediaItemFunctionGroups: [
             {
                 name: "最新",
-                acquireData: getLostAnime,
+                acquireData: getLostTV,
             },
             {
                 name: "续集",
-                acquireData: getContinuedAnime,
+                acquireData: getContinuedTV,
             },
             {
                 name: "过时",
-                acquireData: getOutdatedAnime,
+                acquireData: getOutdatedTV,
             }
         ]
     }
 
-    return {anime}
+    return {tv}
 }

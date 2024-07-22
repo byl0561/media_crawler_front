@@ -30,7 +30,7 @@ export async function appendAnimeSeason(): Promise<ResponseWrapper> {
 }
 
 export async function appendAnimeEpisode(): Promise<ResponseWrapper> {
-    return await instance.get("/api/local/episode/missing")
+    return await instance.get("/api/anime/local/episode/missing")
 }
 
 export async function diffAlbum(): Promise<ResponseWrapper> {

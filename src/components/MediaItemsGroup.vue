@@ -17,6 +17,13 @@ async function onActive(index: number) {
   loading.value = false
 }
 
+function getImgUrl(url: string | null): string {
+  if (url === null)
+    return "/images/404.png"
+
+  return `https://images.weserv.nl/?url=${url}`
+}
+
 onMounted(() => {
   onActive(0)
 })
@@ -38,7 +45,7 @@ onMounted(() => {
             <div class="slide-it" v-for="(mediaItem, index) in activeData.mediaItems" :key="index">
               <div class="movie-item">
                 <div class="mv-img">
-                  <img :src="mediaItem.img" alt="" width="185" height="284">
+                  <img :src="getImgUrl(mediaItem.img)" alt="" width="185" height="284">
                 </div>
                 <div class="title-in">
                   <h6><a href="#">{{mediaItem.title}}</a></h6>
