@@ -169,7 +169,6 @@ a {
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
   color: #666;
-  border-bottom: 1px solid;
   text-decoration: none;
 }
 

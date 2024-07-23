@@ -18,11 +18,11 @@ const {album} = useAlbum()
     <div class="container">
       <div class="row ipad-width">
         <div class="col-md">
-          <MediaItemsGroup :media-group="movie" />
-          <MediaItemsGroup :mediaGroup="tv" />
-          <MediaItemsGroup :mediaGroup="anime" />
+<!--          <MediaItemsGroup :media-group="movie" />-->
+<!--          <MediaItemsGroup :mediaGroup="tv" />-->
+<!--          <MediaItemsGroup :mediaGroup="anime" />-->
           <MediaItemsGroup :mediaGroup="book" />
-          <MediaItemsGroup :mediaGroup="album" />
+<!--          <MediaItemsGroup :mediaGroup="album" />-->
         </div>
       </div>
     </div>

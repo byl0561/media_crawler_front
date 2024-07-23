@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type {MediaGroup, MediaItemGroupData} from "@/types";
-import {onMounted, ref, toRef} from "vue";
+import {onMounted, ref} from "vue";
+import {Swiper, SwiperSlide} from 'swiper/vue'
+import {Pagination} from 'swiper/modules'
+import 'swiper/css';
+import 'swiper/css/pagination'
 
 const {mediaGroup} = defineProps<{mediaGroup:MediaGroup}>()
 let loading = ref<boolean>(false);
@@ -9,6 +13,37 @@ let activeData = ref<MediaItemGroupData>({
   valid: false,
   mediaItems: [],
 })
+
+const swiperBreakpoint = {
+  0: {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+  },
+  479: {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+  },
+  480: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+  },
+  767: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+  },
+  768: {
+    slidesPerView: 3,
+    slidesPerGroup: 3,
+  },
+  1023: {
+    slidesPerView: 3,
+    slidesPerGroup: 3,
+  },
+  1024: {
+    slidesPerView: 4,
+    slidesPerGroup: 4,
+  }
+}
 
 async function onActive(index: number) {
   activeIndex.value = index
@@ -39,21 +74,31 @@ onMounted(() => {
           :class="{active: activeIndex === index}"><a href="#" @click="onActive(index)">{{itemGroup.name}}</a></li>
     </ul>
     <div class="tab-content">
-      <div id="tab1" class="tab">
+      <div class="tab">
         <div class="row">
-          <div class="slick-multiItem">
-            <div class="slide-it" v-for="(mediaItem, index) in activeData.mediaItems" :key="index">
+          <swiper
+              :modules = "[Pagination]"
+              :breakpoints="swiperBreakpoint"
+              :space-between="20"
+              :pagination="{
+                el: '.swiper-pagination',
+                clickable: true,
+                bulletElement: 'div',
+              }"
+          >
+            <div class="swiper-pagination" />
+            <swiper-slide v-for="(mediaItem, index) in activeData.mediaItems" :key="index">
               <div class="movie-item">
                 <div class="mv-img">
-                  <img :src="getImgUrl(mediaItem.img)" alt="" width="185" height="284">
+                  <img :src="getImgUrl(mediaItem.img)" alt="">
                 </div>
                 <div class="title-in">
                   <h6><a href="#">{{mediaItem.title}}</a></h6>
                   <p><i class="ion-android-star"></i><span>{{mediaItem.score}}</span> /10</p>
                 </div>
               </div>
-            </div>
-          </div>
+            </swiper-slide>
+          </swiper>
         </div>
       </div>
     </div>
@@ -94,7 +139,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 0;
+  margin-bottom: 25px;
 }
 @media (max-width: 767px) {
   .tabs ul.tab-links {
@@ -128,17 +173,6 @@ onMounted(() => {
   margin-right: -15px;
 }
 
-.slick-multiItem {
-  display: flex;
-  flex-direction: column;
-}
-
-.slide-it {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
 .movie-item {
   position: relative;
   margin-right: 30px;
@@ -154,6 +188,10 @@ onMounted(() => {
 }
 .movie-item .mv-img {
   position: relative;
+  max-height: 300px;
+  width: 100%;
+  aspect-ratio: 7 / 10;
+  overflow: hidden;
 }
 .movie-item .mv-img:after {
   box-shadow: inset -5px -50px 100px -15px #000000;
@@ -170,6 +208,8 @@ onMounted(() => {
 }
 .movie-item img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
@@ -244,5 +284,24 @@ onMounted(() => {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+</style>
+
+<style>
+.swiper-pagination {
+  position: static;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center
+}
+.swiper-pagination-bullet {
+  background-color: white;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background-color: #dcf836;
+  opacity: 1;
 }
 </style>
