@@ -10,6 +10,7 @@ RUN npm run build
 FROM node:18-alpine
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
+RUN npm config set registry http://registry.npm.taobao.org
 RUN npm install -g http-server
 
 EXPOSE 12445
