@@ -2,6 +2,7 @@
 FROM node:18 AS builder
 WORKDIR /app
 RUN npm config set registry http://registry.npm.taobao.org
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
