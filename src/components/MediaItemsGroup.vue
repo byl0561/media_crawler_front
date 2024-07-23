@@ -6,6 +6,7 @@ import {Pagination} from 'swiper/modules'
 import 'swiper/css';
 import 'swiper/css/pagination'
 import Loader from "@/components/Loader.vue";
+import Stater from "@/components/Stater.vue";
 
 const {mediaGroup} = defineProps<{mediaGroup:MediaGroup}>()
 let loading = ref<boolean>(false);
@@ -79,6 +80,12 @@ onMounted(() => {
         <div class="row">
           <template v-if="loading">
             <Loader/>
+          </template>
+          <template v-else-if="!activeData.valid">
+            <Stater :state="false" />
+          </template>
+          <template v-else-if="activeData.mediaItems.length == 0">
+            <Stater :state="true" />
           </template>
           <template v-else>
             <swiper
