@@ -65,7 +65,7 @@ header .navbar-default {
 header#header-light .navbar-default {
   padding: 15px 0;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   header .navbar-default {
     display: -webkit-flex;
     display: -moz-box;
@@ -95,17 +95,6 @@ header#header-light .navbar-default {
   header .navbar-header {
     text-align: center;
     margin: 0 auto;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  header .logo {
-    max-width: 550px;
-    margin: 0 85px;
-
-    img {
-      margin: 0;
-    }
   }
 }
 </style>

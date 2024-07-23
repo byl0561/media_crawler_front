@@ -5,6 +5,7 @@ import {Swiper, SwiperSlide} from 'swiper/vue'
 import {Pagination} from 'swiper/modules'
 import 'swiper/css';
 import 'swiper/css/pagination'
+import Loader from "@/components/Loader.vue";
 
 const {mediaGroup} = defineProps<{mediaGroup:MediaGroup}>()
 let loading = ref<boolean>(false);
@@ -76,7 +77,11 @@ onMounted(() => {
     <div class="tab-content">
       <div class="tab">
         <div class="row">
-          <swiper
+          <template v-if="loading">
+            <Loader/>
+          </template>
+          <template v-else>
+            <swiper
               :modules = "[Pagination]"
               :breakpoints="swiperBreakpoint"
               :space-between="20"
@@ -99,6 +104,7 @@ onMounted(() => {
               </div>
             </swiper-slide>
           </swiper>
+          </template>
         </div>
       </div>
     </div>
@@ -141,14 +147,6 @@ onMounted(() => {
   justify-content: flex-start;
   margin-bottom: 25px;
 }
-@media (max-width: 767px) {
-  .tabs ul.tab-links {
-    display: inherit;
-  }
-  .tabs ul.tab-links li {
-    margin-bottom: 15px;
-  }
-}
 .tabs ul.tab-links li {
   margin-right: 20px;
   font-family: 'Dosis', sans-serif;
@@ -171,6 +169,7 @@ onMounted(() => {
 .row {
   margin-left: -15px;
   margin-right: -15px;
+  height: 360px;
 }
 
 .movie-item {

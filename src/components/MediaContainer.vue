@@ -40,7 +40,7 @@ const {album} = useAlbum()
   margin-right: -15px;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
   .ipad-width {
     max-width: 550px;
     margin: 0 auto;
