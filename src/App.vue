@@ -126,8 +126,13 @@ body {
 }
 @media (min-width: 768px) {
   .container {
-    margin-right: 30px;
-    margin-left: 30px;
+    margin-right: 101px;
+    margin-left: 101px;
+  }
+}
+@media (min-width: 7882px) {
+  .container {
+    width: 7680px;
   }
 }
 

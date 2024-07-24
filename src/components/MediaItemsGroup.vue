@@ -16,34 +16,11 @@ let activeData = ref<MediaItemGroupData>({
   mediaItems: [],
 })
 
-const swiperBreakpoint = {
-  0: {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-  },
-  479: {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-  },
-  480: {
-    slidesPerView: 2,
-    slidesPerGroup: 2,
-  },
-  767: {
-    slidesPerView: 2,
-    slidesPerGroup: 2,
-  },
-  768: {
-    slidesPerView: 3,
-    slidesPerGroup: 3,
-  },
-  1023: {
-    slidesPerView: 3,
-    slidesPerGroup: 3,
-  },
-  1024: {
-    slidesPerView: 4,
-    slidesPerGroup: 4,
+const swiperBreakpoint:any = {}
+for (let i = 0; i < 20; i++) {
+  swiperBreakpoint[i * 384] = {
+    slidesPerView: i + 1,
+    slidesPerGroup: i + 1,
   }
 }
 
