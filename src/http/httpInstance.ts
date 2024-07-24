@@ -1,4 +1,4 @@
-import axios, {type AxiosInstance, type AxiosResponse} from "axios";
+import axios, {type AxiosInstance} from "axios";
 
 export interface ResponseWrapper{
     success: boolean,
@@ -20,7 +20,7 @@ instance.interceptors.request.use(
         const data:ResponseWrapper = {
             success: false,
         }
-        return Promise.resolve(data);
+        return Promise.reject(data);
     }
 );
 
@@ -36,7 +36,7 @@ instance.interceptors.response.use(
         const data:ResponseWrapper = {
             success: false,
         }
-        return Promise.resolve(data);
+        return Promise.reject(data);
     }
 );
 

@@ -47,11 +47,16 @@ const swiperBreakpoint = {
   }
 }
 
-async function onActive(index: number) {
+function onActive(index: number) {
   activeIndex.value = index
   loading.value = true
-  activeData.value = await mediaGroup.mediaItemFunctionGroups[index].acquireData()
-  loading.value = false
+  mediaGroup.mediaItemFunctionGroups[index].acquireData()
+      .then(data => activeData.value = data)
+      .catch(() => activeData.value = {
+        valid: false,
+        mediaItems: [],
+      })
+      .finally(() => loading.value = false)
 }
 
 function getImgUrl(url: string | null): string {
@@ -106,7 +111,7 @@ onMounted(() => {
                 </div>
                 <div class="title-in">
                   <h6><a href="#">{{mediaItem.title}}</a></h6>
-                  <p><i class="ion-android-star"></i><span>{{mediaItem.score}}</span> /10</p>
+                  <p v-show="mediaItem.score"><i class="ion-android-star"></i><span>{{mediaItem.score}}</span> /10</p>
                 </div>
               </div>
             </swiper-slide>
@@ -142,7 +147,7 @@ onMounted(() => {
 }
 
 .tabs {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   overflow: hidden;
 }
 .tabs ul.tab-links {
