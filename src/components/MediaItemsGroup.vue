@@ -58,7 +58,7 @@ onMounted(() => {
   <div class="tabs">
     <ul class="tab-links">
       <li v-for="(itemGroup, index) in mediaGroup.mediaItemFunctionGroups" :key="index"
-          :class="{active: activeIndex === index}"><a href="#" @click="onActive(index)">{{itemGroup.name}}</a></li>
+          :class="{active: activeIndex === index}"><a href="javascript:void(0)" @click="onActive(index)">{{itemGroup.name}}</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab">
