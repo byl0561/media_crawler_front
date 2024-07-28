@@ -27,6 +27,7 @@ const {state} = defineProps<{state:boolean}>()
 }
 
 #status img {
+  position: absolute;
   width: 70px;
   height: 70px;
 }

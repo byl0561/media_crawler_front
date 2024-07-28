@@ -11,6 +11,7 @@ import Stater from "@/components/Stater.vue";
 const {mediaGroup} = defineProps<{mediaGroup:MediaGroup}>()
 let loading = ref<boolean>(false);
 let activeIndex = ref<Number>(0)
+let successEmpty = ref<boolean>(false);
 let activeData = ref<MediaItemGroupData>({
   valid: false,
   mediaItems: [],
@@ -24,16 +25,19 @@ for (let i = 0; i < 20; i++) {
   }
 }
 
-function onActive(index: number) {
+async function onActive(index: number) {
   activeIndex.value = index
   loading.value = true
-  mediaGroup.mediaItemFunctionGroups[index].acquireData()
-      .then(data => activeData.value = data)
-      .catch(() => activeData.value = {
-        valid: false,
-        mediaItems: [],
-      })
-      .finally(() => loading.value = false)
+  try {
+    activeData.value = await mediaGroup.mediaItemFunctionGroups[index].acquireData();
+  } catch (error) {
+    activeData.value = {
+      valid: false,
+      mediaItems: [],
+    };
+  } finally {
+    loading.value = false;
+  }
 }
 
 function getImgUrl(url: string | null): string {
@@ -46,8 +50,19 @@ function getImgUrl(url: string | null): string {
   return `https://images.weserv.nl/?url=${url}`
 }
 
-onMounted(() => {
-  onActive(0)
+onMounted(async () => {
+  for (let i = 0; i < mediaGroup.mediaItemFunctionGroups.length; i++) {
+    await onActive(0)
+    if (!activeData.value.valid || activeData.value.mediaItems.length > 0) {
+      break
+    }
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    mediaGroup.mediaItemFunctionGroups.splice(i, 1);
+    i--
+  }
+  if (mediaGroup.mediaItemFunctionGroups.length == 0) {
+    successEmpty.value = true;
+  }
 })
 </script>
 
@@ -56,8 +71,8 @@ onMounted(() => {
     <h2>{{mediaGroup.name}}</h2>
   </div>
   <div class="tabs">
-    <ul class="tab-links">
-      <li v-for="(itemGroup, index) in mediaGroup.mediaItemFunctionGroups" :key="index"
+    <ul class="tab-links" v-show="!successEmpty">
+      <li v-for="(itemGroup, index) in mediaGroup.mediaItemFunctionGroups" :key="itemGroup.name"
           :class="{active: activeIndex === index}"><a href="javascript:void(0)" @click="onActive(index)">{{itemGroup.name}}</a></li>
     </ul>
     <div class="tab-content">
@@ -65,6 +80,9 @@ onMounted(() => {
         <div class="row">
           <template v-if="loading">
             <Loader/>
+          </template>
+          <template v-else-if="successEmpty">
+            <Stater :state="true" />
           </template>
           <template v-else-if="!activeData.valid">
             <Stater :state="false" />
