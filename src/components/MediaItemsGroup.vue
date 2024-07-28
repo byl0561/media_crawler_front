@@ -108,7 +108,7 @@ onMounted(async () => {
                   <img :src="getImgUrl(mediaItem.img)" alt="" />
                 </div>
                 <div class="title-in">
-                  <h6><a :href="mediaItem.link == null ? '#' : mediaItem.link">{{mediaItem.title}}</a></h6>
+                  <h6><a :href="mediaItem.link == null ? '#' : mediaItem.link" target="_blank">{{mediaItem.title}}</a></h6>
                   <p v-show="mediaItem.score"><i class="ion-android-star"></i><span>{{mediaItem.score}}</span> /10</p>
                 </div>
               </div>
