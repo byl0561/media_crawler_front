@@ -87,7 +87,7 @@ onMounted(() => {
             <swiper-slide v-for="(mediaItem, index) in activeData.mediaItems" :key="index">
               <div class="movie-item">
                 <div class="mv-img">
-                  <img :src="getImgUrl(mediaItem.img)" alt="" @error="getImgUrl(null)">
+                  <img :src="getImgUrl(mediaItem.img)" alt="" />
                 </div>
                 <div class="title-in">
                   <h6><a href="#">{{mediaItem.title}}</a></h6>
