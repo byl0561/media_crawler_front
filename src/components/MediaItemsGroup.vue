@@ -41,7 +41,7 @@ function getImgUrl(url: string | null): string {
     return "/images/404.png"
 
   if (url.startsWith('/')) {
-    url = `/api${url}`
+    return `/api${url}`
   }
   return `https://images.weserv.nl/?url=${url}`
 }
@@ -87,7 +87,7 @@ onMounted(() => {
             <swiper-slide v-for="(mediaItem, index) in activeData.mediaItems" :key="index">
               <div class="movie-item">
                 <div class="mv-img">
-                  <img :src="getImgUrl(mediaItem.img)" alt="">
+                  <img :src="getImgUrl(mediaItem.img)" alt="" @error="getImgUrl(null)">
                 </div>
                 <div class="title-in">
                   <h6><a href="#">{{mediaItem.title}}</a></h6>
