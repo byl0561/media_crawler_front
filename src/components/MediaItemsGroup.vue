@@ -40,6 +40,9 @@ function getImgUrl(url: string | null): string {
   if (url === null)
     return "/images/404.png"
 
+  if (url.startsWith('/')) {
+    url = `/api${url}`
+  }
   return `https://images.weserv.nl/?url=${url}`
 }
 
