@@ -7,6 +7,7 @@ export default function () {
             title: album.title,
             img: album.poster,
             score: album.score,
+            link: album.link,
         }
     }
 

@@ -2,6 +2,7 @@ export interface MediaItem {
     title: string;
     img: string;
     score: number;
+    link: string;
 }
 
 export interface MediaItemGroupData {

@@ -7,6 +7,7 @@ export default function () {
             title: movie.title,
             img: movie.poster,
             score: movie.score,
+            link: movie.link,
         }
     }
 

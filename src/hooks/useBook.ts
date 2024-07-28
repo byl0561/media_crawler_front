@@ -7,6 +7,7 @@ export default function () {
             title: book.title,
             img: book.poster,
             score: book.score,
+            link: book.link,
         }
     }
 

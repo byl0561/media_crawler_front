@@ -7,6 +7,7 @@ export default function () {
             title: tv.title,
             img: tv.poster,
             score: tv.score,
+            link: tv.link,
         }
     }
 

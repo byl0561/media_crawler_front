@@ -37,7 +37,7 @@ function onActive(index: number) {
 }
 
 function getImgUrl(url: string | null): string {
-  if (url === null)
+  if (url == null)
     return "/images/404.png"
 
   if (url.startsWith('/')) {
@@ -90,7 +90,7 @@ onMounted(() => {
                   <img :src="getImgUrl(mediaItem.img)" alt="" />
                 </div>
                 <div class="title-in">
-                  <h6><a href="#">{{mediaItem.title}}</a></h6>
+                  <h6><a :href="mediaItem.link == null ? '#' : mediaItem.link">{{mediaItem.title}}</a></h6>
                   <p v-show="mediaItem.score"><i class="ion-android-star"></i><span>{{mediaItem.score}}</span> /10</p>
                 </div>
               </div>

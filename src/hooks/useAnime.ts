@@ -7,6 +7,7 @@ export default function () {
             title: anime.title,
             img: anime.poster,
             score: anime.score,
+            link: anime.link,
         }
     }
 
